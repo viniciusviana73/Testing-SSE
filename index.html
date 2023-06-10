@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Teste SSE</title>
+</head>
+
+<body>
+    <h1>Teste SSE</h1>
+    <ul id="event-list"></ul>
+
+    <script>
+        const eventList = document.getElementById('event-list');
+
+        const eventSource = new EventSource('/sse');
+
+        eventSource.onmessage = function (event) {
+            const eventData = JSON.parse(event.data);
+            const newEvent = document.createElement('li');
+            newEvent.textContent = eventData.message;
+            eventList.appendChild(newEvent);
+        };
+
+        eventSource.onerror = function (error) {
+            console.error('SSE error:', error);
+        };
+    </script>
+</body>
+
+</html>
